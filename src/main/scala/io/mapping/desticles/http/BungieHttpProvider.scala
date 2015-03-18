@@ -12,11 +12,29 @@ object BungieHttpProvider {
 
 	implicit val formats = DefaultFormats
 
-	def getInventory(po: SearchDestinyPlayer, c: PlayerCharacter) = get[Inventory](formControllerPath(Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory")) + "?definitions=True").Response
+	def getInventoryItemDetail(po: SearchDestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = get[InventoryItemDetail](
+		formControllerPath(
+			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", "6917529045166408798")
+		) + "?definitions=True"
+	).Response
 
-	def getAccount(po: SearchDestinyPlayer) = get[Account](formControllerPath(Seq(po.membershipType.toString, "Account", po.membershipId))).Response
+	def getInventory(po: SearchDestinyPlayer, c: PlayerCharacter) = get[Inventory](
+		formControllerPath(
+			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory")
+		) + "?definitions=True"
+	).Response
 
-	def searchDestinyPlayer(handle: String, membershipType: String = "1") = get[SearchDestinyPlayer](formControllerPath(Seq("SearchDestinyPlayer", membershipType, handle))).Response
+	def getAccount(po: SearchDestinyPlayer) = get[Account](
+		formControllerPath(
+			Seq(po.membershipType.toString, "Account", po.membershipId)
+		)
+	).Response
+
+	def searchDestinyPlayer(handle: String, membershipType: String = "1") = get[SearchDestinyPlayer](
+		formControllerPath(
+			Seq("SearchDestinyPlayer", membershipType, handle)
+		)
+	).Response
 
 	/**
 	 * Get a strongly-typed object from Bungie servers
@@ -26,7 +44,7 @@ object BungieHttpProvider {
 	 * @return an instance of T
 	 */
 	def get[T](s: String)(implicit m: Manifest[T]): BaseResponse[T] = {
-		read[BaseResponse[T]](stringGet(s, None))
+		read[BaseResponse[T]](stringGet(s, None, false))
 	}
 
 	/**
@@ -35,10 +53,10 @@ object BungieHttpProvider {
 	 * @param q optional sequence of query parameters
 	 * @return a string
 	 */
-	def stringGet(s: Seq[String], q: Option[Seq[String]]): String = {
+	def stringGet(s: Seq[String], q: Option[Seq[String]], debugOutput: Boolean = false): String = {
 		q match {
-			case Some(x) => stringGet(formControllerPath(s), Some(x.mkString("&")))
-			case None => stringGet(formControllerPath(s), None)
+			case Some(x) => stringGet(formControllerPath(s), Some(x.mkString("&")), debugOutput)
+			case None => stringGet(formControllerPath(s), None, debugOutput)
 		}
 	}
 
@@ -48,7 +66,7 @@ object BungieHttpProvider {
 	 * @param q optional query parameter string
 	 * @return a string
 	 */
-	def stringGet(s: String, q: Option[String], debugOutput: Boolean = false): String = {
+	def stringGet(s: String, q: Option[String], debugOutput: Boolean): String = {
 		var query = "http://www.bungie.net/Platform/Destiny/" + s
 
 		q match {
