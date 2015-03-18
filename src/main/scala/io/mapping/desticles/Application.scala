@@ -1,7 +1,7 @@
 package io.mapping.desticles
 
 import com.typesafe.config.ConfigFactory
-import io.mapping.desticles.controller.{CharacterController, InventoryController, PlayerAccountController}
+import io.mapping.desticles.controller.{CharacterController, GrimoireController, InventoryController, PlayerAccountController}
 import org.json4s.DefaultFormats
 
 object Application extends App {
@@ -45,4 +45,10 @@ object Application extends App {
 	for (p <- topItemDetail.data.item.perks) {
 		println(s"\t${p.perkHash}")
 	}
+
+	/**
+	 * Get the player's Grimoire Cards
+	 */
+	val grimCards = GrimoireController.getGrimoireCards(playerAcct.player)
+	println(s"The player has a Grimoire score of ${grimCards.data.score}")
 }

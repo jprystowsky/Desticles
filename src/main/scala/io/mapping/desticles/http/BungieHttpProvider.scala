@@ -13,6 +13,17 @@ object BungieHttpProvider {
 	implicit val formats = DefaultFormats
 
 	/**
+	 * Get the Grimoire cards for a player
+	 * @param po an instance of DestinyPlayer
+	 * @return an instance of GrimoireCards
+	 */
+	def getPlayerGrimoireCards(po: DestinyPlayer) = getResponse[GrimoireCards](
+		createControllerPath(
+			Seq("Vanguard", "Grimoire", po.membershipType.toString, po.membershipId)
+		) + "?definitions=True&flavour=True"
+	)
+
+	/**
 	 * Get the progression of a player's character
 	 * @param po an instance of DestinyPlayer
 	 * @param c an instance of PlayerCharacter corresponding to po
