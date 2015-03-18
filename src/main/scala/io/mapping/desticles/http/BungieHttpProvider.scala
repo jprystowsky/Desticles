@@ -3,7 +3,7 @@ package io.mapping.desticles.http
 import com.typesafe.config.ConfigFactory
 import io.mapping.desticles.model._
 import org.json4s.DefaultFormats
-import org.json4s.native.Serialization.read
+import org.json4s.native.Serialization.{read, writePretty}
 
 import scalaj.http.Http
 
@@ -12,26 +12,32 @@ object BungieHttpProvider {
 
 	implicit val formats = DefaultFormats
 
+	def getCharacterStats(po: SearchDestinyPlayer) = get[CharacterStats](
+		createControllerPath(
+			Seq("Stats", "Account", po.membershipType.toString, po.membershipId)
+		)
+	).Response
+
 	def getInventoryItemDetail(po: SearchDestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = get[InventoryItemDetail](
-		formControllerPath(
+		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", "6917529045166408798")
 		) + "?definitions=True"
 	).Response
 
 	def getInventory(po: SearchDestinyPlayer, c: PlayerCharacter) = get[Inventory](
-		formControllerPath(
+		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory")
 		) + "?definitions=True"
 	).Response
 
 	def getAccount(po: SearchDestinyPlayer) = get[Account](
-		formControllerPath(
+		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId)
 		)
 	).Response
 
 	def searchDestinyPlayer(handle: String, membershipType: String = "1") = get[SearchDestinyPlayer](
-		formControllerPath(
+		createControllerPath(
 			Seq("SearchDestinyPlayer", membershipType, handle)
 		)
 	).Response
@@ -44,7 +50,14 @@ object BungieHttpProvider {
 	 * @return an instance of T
 	 */
 	def get[T](s: String)(implicit m: Manifest[T]): BaseResponse[T] = {
-		read[BaseResponse[T]](stringGet(s, None, false))
+		val r = read[BaseResponse[T]](getString(s, None, false))
+
+		if (r.ThrottleSeconds > 0) {
+			println("***THROTTLE WARNING***")
+			println(writePretty(r))
+		}
+
+		r
 	}
 
 	/**
@@ -53,10 +66,10 @@ object BungieHttpProvider {
 	 * @param q optional sequence of query parameters
 	 * @return a string
 	 */
-	def stringGet(s: Seq[String], q: Option[Seq[String]], debugOutput: Boolean = false): String = {
+	def getString(s: Seq[String], q: Option[Seq[String]], debugOutput: Boolean = false): String = {
 		q match {
-			case Some(x) => stringGet(formControllerPath(s), Some(x.mkString("&")), debugOutput)
-			case None => stringGet(formControllerPath(s), None, debugOutput)
+			case Some(x) => getString(createControllerPath(s), Some(x.mkString("&")), debugOutput)
+			case None => getString(createControllerPath(s), None, debugOutput)
 		}
 	}
 
@@ -66,7 +79,7 @@ object BungieHttpProvider {
 	 * @param q optional query parameter string
 	 * @return a string
 	 */
-	def stringGet(s: String, q: Option[String], debugOutput: Boolean): String = {
+	def getString(s: String, q: Option[String], debugOutput: Boolean): String = {
 		var query = "http://www.bungie.net/Platform/Destiny/" + s
 
 		q match {
@@ -90,5 +103,5 @@ object BungieHttpProvider {
 	 * @param x a sequence of controller path components
 	 * @return a string
 	 */
-	private def formControllerPath(x: Seq[String]): String = x.mkString("/") + "/"
+	private def createControllerPath(x: Seq[String]): String = x.mkString("/") + "/"
 }
