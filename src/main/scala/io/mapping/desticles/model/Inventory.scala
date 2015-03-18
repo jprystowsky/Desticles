@@ -92,8 +92,8 @@ case class InventoryDefinitionItem(
 	                                  tierType: Int,
 	                                  itemTypeName: String,
 	                                  bucketTypeHash: Long,
-	                                  primaryBaseStat: Option[InventoryDefinitionItemBaseStat],
-	                                  baseStats: Option[Array[InventoryDefinitionItemBaseStat]],
+	                                  primaryBaseStat: Option[FullyBoundedStat],
+	                                  baseStats: Option[Array[FullyBoundedStat]],
 	                                  perkHashes: Option[Array[Long]],
 	                                  itemIdentifier: String,
 	                                  specialItemType: Int,
@@ -111,13 +111,6 @@ case class InventoryDefinitionItem(
 	                                  nonTransferrable: Boolean,
 	                                  exclusive: Int
 	                                  )
-
-case class InventoryDefinitionItemBaseStat(
-	                                          statHash: Long,
-	                                          value: Long,
-	                                          minimum: Long,
-	                                          maximum: Long
-	                                          )
 
 case class InventoryDefinitionItemEquippingBlock(
 	                                                weaponSandboxPatternIndex: Int,
@@ -206,7 +199,7 @@ case class InventoryDefinitionStatGroup(
 	                                       maximumValue: Long,
 	                                       uiPosition: Int,
 	                                       scaledStats: Array[InventoryDefinitionScaledStatGroupStat],
-	                                       overrides: Map[String, InventoryDefinitionStatGroupOverride]
+	                                       overrides: Map[String, DisplayableStat]
 	                                       )
 
 case class InventoryDefinitionScaledStatGroupStat(
@@ -220,13 +213,6 @@ case class InventoryDefinitionScaledStatGroupStatInterpolation(
 	                                                              value: Long,
 	                                                              weight: Long
 	                                                              )
-
-case class InventoryDefinitionStatGroupOverride(
-	                                               statHash: Long,
-	                                               displayName: String,
-	                                               displayDescription: String,
-	                                               displayIcon: String
-	                                               )
 
 case class InventoryDefinitionStat(
 	                                  statHash: Long,

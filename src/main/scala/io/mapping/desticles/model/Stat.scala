@@ -14,3 +14,17 @@ case class UpperBoundedStat(
 	                           value: Long,
 	                           maximumValue: Long
 	                           ) extends StatWithValue(statHash, value)
+
+case class FullyBoundedStat(
+	                           statHash: Long,
+	                           value: Long,
+	                           minimum: Long,
+	                           maximum: Long
+	                           ) extends StatWithValue(statHash, value)
+
+case class DisplayableStat(
+	                          statHash: Long,
+	                          displayName: String,
+	                          displayDescription: String,
+	                          displayIcon: String
+	                          ) extends Stat(statHash)
