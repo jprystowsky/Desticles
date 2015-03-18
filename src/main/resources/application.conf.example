@@ -1,8 +1,0 @@
-# Start by renaming this file to application.conf
-
-# Replace this value with your Bungie API key, retrieved from https://www.bungie.net/en/User/API
-bungieApiKey=InsertBungieApiKeyHere
-
-# Replace this with your character name; this application defaults to looking at Microsoft accounts,
-# but you can read the code and see how to override easily (see the searchDestinyPlayer method of BungieHttpProvider)
-playerName=MyPlayerName_ReplaceMe

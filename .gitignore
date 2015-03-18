@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+#user setting
+Desticles.iml
+
 ### SBT template
 # Simple Build Tool
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
