@@ -20,7 +20,7 @@ object BungieHttpProvider {
 
 	def getInventoryItemDetail(po: SearchDestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = get[InventoryItemDetail](
 		createControllerPath(
-			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", "6917529045166408798")
+			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", itemInstanceId)
 		) + "?definitions=True"
 	).Response
 
