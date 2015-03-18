@@ -18,48 +18,9 @@ case class InventoryDataBuckets(
 	                               )
 
 case class InventoryDataBucket(
-                          items: Array[InventoryDataBucketItem],
+                          items: Array[InventoryItem],
                           bucketHash: Long
 	                          )
-
-case class InventoryDataBucketItem(
-	                                  itemHash: Long,
-	                                  bindStatus: Int,
-	                                  isEquipped: Boolean,
-	                                  itemInstanceId: String,
-	                                  itemLevel: Long,
-	                                  stackSize: Int,
-	                                  qualityLevel: Long,
-	                                  stats: Array[UpperBoundedStat],
-	                                  canEquip: Boolean,
-	                                  equipRequirementLevel: Option[Long],
-	                                  unlockFlagHashRequiredToEquip: Long,
-	                                  cannotEquipReason: Int,
-	                                  damageType: Int,
-	                                  damageTypeNodeIndex: Int,
-	                                  damageTypeStepIndex: Int,
-	                                  progression: ItemProgression,
-	                                  talentGridHash: Long,
-	                                  nodes: Array[InventoryDataBucketItemNode],
-	                                  useCustomDyes: Boolean,
-	                                  artRegions: Map[String, Int],
-	                                  isEquipment: Boolean,
-	                                  isGridComplete: Boolean,
-	                                  perks: Array[InventoryDataBucketItemPerk],
-	                                  location: Int,
-	                                  transferStatus: Int
-	                                  )
-
-case class InventoryDataBucketItemNode(
-	                                      isActivated: Boolean,
-	                                      stepIndex: Int
-	                                      )
-
-case class InventoryDataBucketItemPerk(
-	                                      iconPath: String,
-	                                      perkHash: Long,
-	                                      isActive: Boolean
-	                                      )
 
 case class InventoryDataCurrency(
 	                                itemHash: Long,
@@ -79,52 +40,6 @@ case class InventoryDefinition(
 	                              materialRequirements: AnyVal, // null?
 	                              flags: AnyVal // null?
 	                              )
-
-case class InventoryDefinitionItem(
-	                                  itemHash: Long,
-	                                  itemName: String,
-	                                  itemDescription: String,
-	                                  icon: String,
-	                                  secondaryIcon: String,
-	                                  actionName: String,
-	                                  actionDescription: String,
-	                                  tierTypeName: String,
-	                                  tierType: Int,
-	                                  itemTypeName: String,
-	                                  bucketTypeHash: Long,
-	                                  primaryBaseStat: Option[FullyBoundedStat],
-	                                  baseStats: Option[Array[FullyBoundedStat]],
-	                                  perkHashes: Option[Array[Long]],
-	                                  itemIdentifier: String,
-	                                  specialItemType: Int,
-	                                  talentGridHash: Long,
-	                                  equippingBlock: Option[InventoryDefinitionItemEquippingBlock],
-	                                  hasGeometry: Boolean,
-	                                  statGroupHash: Int,
-	                                  itemLevels: Option[Array[Long]],
-	                                  qualityLevel: Int,
-	                                  rewardItemHash: Int,
-	                                  values: AnyVal,
-	                                  itemType: Int,
-	                                  itemSubType: Int,
-	                                  classType: Int,
-	                                  nonTransferrable: Boolean,
-	                                  exclusive: Int
-	                                  )
-
-case class InventoryDefinitionItemEquippingBlock(
-	                                                weaponSandboxPatternIndex: Int,
-	                                                gearArtArrangementIndex: Int,
-	                                                defaultDyes: Option[Array[ItemDye]],
-	                                                lockedDyes: Option[Array[ItemDye]],
-	                                                customDyes: Option[Array[ItemDye]],
-	                                                customDyeExpression: InventoryDefinitionItemEquippingBlockCustomDyeExpression,
-	                                                weaponPatternHash: Long
-	                                                )
-
-case class InventoryDefinitionItemEquippingBlockCustomDyeExpression(
-	                                                                   steps: AnyVal
-	                                                                   )
 
 case class InventoryDefinitionBucket(
 	                                    bucketHash: Long,
