@@ -16,7 +16,7 @@ case class InventoryItem(
 	                        damageType: Int,
 	                        damageTypeNodeIndex: Int,
 	                        damageTypeStepIndex: Int,
-	                        progression: ItemProgression,
+	                        progression: Progression,
 	                        talentGridHash: Long,
 	                        nodes: Array[InventoryItemNode],
 	                        useCustomDyes: Boolean,

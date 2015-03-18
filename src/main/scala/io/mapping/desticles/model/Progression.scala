@@ -1,6 +1,6 @@
 package io.mapping.desticles.model
 
-case class ItemProgression(
+case class Progression(
 	                          dailyProgress: Option[Long],
 	                          weeklyProgress: Option[Long],
 	                          currentProgress: Option[Long],

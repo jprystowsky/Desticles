@@ -2,7 +2,7 @@ package io.mapping.desticles.model
 
 case class PlayerCharacter(
 	                          characterBase: PlayerCharacterBase,
-	                          levelProgression: ItemProgression,
+	                          levelProgression: Progression,
 	                          emblemPath: String,
 	                          backgroundPath: String,
 	                          emblemHash: Long,
