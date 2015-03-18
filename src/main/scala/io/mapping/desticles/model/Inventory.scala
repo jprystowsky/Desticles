@@ -30,7 +30,7 @@ case class InventoryDataBucketItem(
 	                                  itemLevel: Long,
 	                                  stackSize: Int,
 	                                  qualityLevel: Long,
-	                                  stats: Array[InventoryDataBucketItemStat],
+	                                  stats: Array[UpperBoundedStat],
 	                                  canEquip: Boolean,
 	                                  equipRequirementLevel: Option[Long],
 	                                  unlockFlagHashRequiredToEquip: Long,
@@ -38,7 +38,7 @@ case class InventoryDataBucketItem(
 	                                  damageType: Int,
 	                                  damageTypeNodeIndex: Int,
 	                                  damageTypeStepIndex: Int,
-	                                  progression: InventoryDataBucketItemProgression,
+	                                  progression: ItemProgression,
 	                                  talentGridHash: Long,
 	                                  nodes: Array[InventoryDataBucketItemNode],
 	                                  useCustomDyes: Boolean,
@@ -49,23 +49,6 @@ case class InventoryDataBucketItem(
 	                                  location: Int,
 	                                  transferStatus: Int
 	                                  )
-
-case class InventoryDataBucketItemStat(
-	                                      statHash: Long,
-	                                      value: Long,
-	                                      maximumValue: Long
-	                                      )
-
-case class InventoryDataBucketItemProgression(
-	                                             dailyProgress: Option[Long],
-	                                             weeklyProgress: Option[Long],
-	                                             currentProgress: Option[Long],
-	                                             level: Option[Long],
-	                                             step: Option[Long],
-	                                             progressToNextLevel: Option[Long],
-	                                             nextLevelAt: Option[Long],
-	                                             progressionHash: Option[Long]
-	                                             )
 
 case class InventoryDataBucketItemNode(
 	                                      isActivated: Boolean,
@@ -139,17 +122,12 @@ case class InventoryDefinitionItemBaseStat(
 case class InventoryDefinitionItemEquippingBlock(
 	                                                weaponSandboxPatternIndex: Int,
 	                                                gearArtArrangementIndex: Int,
-	                                                defaultDyes: Option[Array[InventoryDefinitionItemDye]],
-	                                                lockedDyes: Option[Array[InventoryDefinitionItemDye]],
-	                                                customDyes: Option[Array[InventoryDefinitionItemDye]],
+	                                                defaultDyes: Option[Array[ItemDye]],
+	                                                lockedDyes: Option[Array[ItemDye]],
+	                                                customDyes: Option[Array[ItemDye]],
 	                                                customDyeExpression: InventoryDefinitionItemEquippingBlockCustomDyeExpression,
 	                                                weaponPatternHash: Long
 	                                                )
-
-case class InventoryDefinitionItemDye(
-	                                     channelHash: Long,
-	                                     dyeHash: Long
-	                                     )
 
 case class InventoryDefinitionItemEquippingBlockCustomDyeExpression(
 	                                                                   steps: AnyVal
