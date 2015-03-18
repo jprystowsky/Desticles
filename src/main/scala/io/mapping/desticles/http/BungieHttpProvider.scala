@@ -12,31 +12,31 @@ object BungieHttpProvider {
 
 	implicit val formats = DefaultFormats
 
-	def getCharacterStats(po: SearchDestinyPlayer) = get[CharacterStats](
+	def getCharacterStats(po: DestinyPlayer) = get[CharacterStats](
 		createControllerPath(
 			Seq("Stats", "Account", po.membershipType.toString, po.membershipId)
 		)
 	).Response
 
-	def getInventoryItemDetail(po: SearchDestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = get[InventoryItemDetail](
+	def getInventoryItemDetail(po: DestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = get[InventoryItemDetail](
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", itemInstanceId)
 		) + "?definitions=True"
 	).Response
 
-	def getInventory(po: SearchDestinyPlayer, c: PlayerCharacter) = get[Inventory](
+	def getInventory(po: DestinyPlayer, c: PlayerCharacter) = get[Inventory](
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory")
 		) + "?definitions=True"
 	).Response
 
-	def getAccount(po: SearchDestinyPlayer) = get[Account](
+	def getAccount(po: DestinyPlayer) = get[Account](
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId)
 		)
 	).Response
 
-	def searchDestinyPlayer(handle: String, membershipType: String = "1") = get[SearchDestinyPlayer](
+	def searchDestinyPlayer(handle: String, membershipType: String = "1") = get[DestinyPlayer](
 		createControllerPath(
 			Seq("SearchDestinyPlayer", membershipType, handle)
 		)
