@@ -9,8 +9,8 @@ case class PlayerCharacter(
 	                          characterLevel: Long,
 	                          baseCharacterLevel: Long,
 	                          isPrestigeLevel: Boolean,
-	                          percentToNextLevel: Long
-	                          )
+	                          percentToNextLevel: BigDecimal
+	                          ) extends CharacterLevel
 
 case class PlayerCharacterBase(
 	                              membershipId: String,
