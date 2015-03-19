@@ -17,6 +17,15 @@ object BungieHttpProvider extends BungieEndpoints {
 	implicit val formats = DefaultFormats
 
 	/**
+	 * Gets the Destiny manifest
+	 * @return an instance of DestinyManifest
+	 */
+	def getManifest = getResponse[DestinyManifest](
+		destinyEndpoint,
+		createControllerPath(Seq("Manifest"))
+	)
+
+	/**
 	 * Gets the activities for a player's character
 	 * @param po an instance of DestinyPlayer
 	 * @param c an instance of PlayerCharacter

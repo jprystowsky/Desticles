@@ -1,10 +1,9 @@
 package io.mapping.desticles
 
-import java.awt.{ Color, Graphics2D }
-import scala.util.Random
-import javax.swing.{JFrame, JOptionPane, JLabel, ImageIcon}
+import javax.swing.{ImageIcon, JFrame, JLabel}
+
 import com.typesafe.config.ConfigFactory
-import io.mapping.desticles.controller.{CharacterController, GrimoireController, InventoryController, PlayerAccountController}
+import io.mapping.desticles.controller._
 import io.mapping.desticles.debug.DumpOutput
 import io.mapping.desticles.http.BungieHttpProvider
 import org.json4s.DefaultFormats
@@ -13,6 +12,18 @@ object Application extends App {
 	val config = ConfigFactory.load()
 
 	implicit val formats = DefaultFormats
+
+	/**
+	 * Initialize the manifest
+	 */
+	var manifest = ManifestController.getManifest
+	manifest match {
+		case Left(m) => {
+			println("Manifest retrieved")
+			println(m)
+		}
+		case Right(n) => println("Couldn't do it")
+	}
 
 	/**
 	 * Get a player and their account
@@ -51,8 +62,6 @@ object Application extends App {
 		println(s"\t${p.perkHash}")
 	}
 
-  println(topItem.toString)
-  println(topItemDetail.toString)
   showTopItemImg(topItem, topItemDetail)
 
 
@@ -72,21 +81,22 @@ object Application extends App {
     //This link returns item image.  Data in topItem and topItemDetail does not contain this value.
     //https://www.bungie.net//common/destiny_content/icons/80da6cbfde86ecd6a8bb720c3df54d0b.jpg
 
-    val i = new JLabel(new ImageIcon("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemInstanceId + ".jpg"))
+	  //println(org.json4s.native.Serialization.writePretty(topItem))
+	  //println(org.json4s.native.Serialization.writePretty(topItemDetail))
 
-    println("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemInstanceId + ".jpg")
+    val i = new JLabel(new ImageIcon("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemHash + ".jpg"))
+
+    println("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemHash + ".jpg")
     f.getContentPane().add(i);
     f.add(i);
     f.pack();
     f.setVisible(true);
   }
-}
 	/**
 	 * Get the top character's activities
 	 */
 	val acts = CharacterController.getCharacterActivities(playerAcct.player, topChar)
-	println(acts.data.available.getOrElse(Array()))
-	println(s"The character " + (if (acts.data.available.getOrElse(Array()).exists(ca => ca.activityHash.equals(1836893119) && ca.isCompleted)) "has completed" else "has not completed") + "Crota's end on hard mode")
+	println(s"The character " + (if (acts.data.available.getOrElse(Array()).exists(ca => ca.activityHash == 1836893119 && ca.isCompleted)) "has completed" else "has not completed") + " Crota's end on hard mode")
 
 	/**
 	 * DEV AREA
