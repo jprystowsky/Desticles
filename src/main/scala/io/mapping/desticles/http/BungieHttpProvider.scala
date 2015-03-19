@@ -7,7 +7,11 @@ import org.json4s.native.Serialization.{read, writePretty}
 
 import scalaj.http.Http
 
-object BungieHttpProvider {
+trait BungieEndpoints {
+	val destinyEndpoint = "http://www.bungie.net/Platform/Destiny/"
+}
+
+object BungieHttpProvider extends BungieEndpoints {
 	val config = ConfigFactory.load()
 
 	implicit val formats = DefaultFormats
@@ -18,6 +22,7 @@ object BungieHttpProvider {
 	 * @return an instance of GrimoireCards
 	 */
 	def getPlayerGrimoireCards(po: DestinyPlayer) = getResponse[GrimoireCards](
+		destinyEndpoint,
 		createControllerPath(
 			Seq("Vanguard", "Grimoire", po.membershipType.toString, po.membershipId)
 		) + "?definitions=True&flavour=True"
@@ -30,6 +35,7 @@ object BungieHttpProvider {
 	 * @return an instance of CharacterProgression
 	 */
 	def getCharacterProgression(po: DestinyPlayer, c: PlayerCharacter) = getResponse[CharacterProgression](
+		destinyEndpoint,
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Progression")
 		)
@@ -41,6 +47,7 @@ object BungieHttpProvider {
 	 * @return an instance of CharacterStats
 	 */
 	def getCharacterStats(po: DestinyPlayer) = getResponse[CharacterStats](
+		destinyEndpoint,
 		createControllerPath(
 			Seq("Stats", "Account", po.membershipType.toString, po.membershipId)
 		)
@@ -54,6 +61,7 @@ object BungieHttpProvider {
 	 * @return an instance of InventoryItemDetail
 	 */
 	def getInventoryItemDetail(po: DestinyPlayer, c: PlayerCharacter, itemInstanceId: String) = getResponse[InventoryItemDetail](
+		destinyEndpoint,
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory", itemInstanceId)
 		) + "?definitions=True"
@@ -66,6 +74,7 @@ object BungieHttpProvider {
 	 * @return an instance of Inventory
 	 */
 	def getInventory(po: DestinyPlayer, c: PlayerCharacter) = getResponse[Inventory](
+		destinyEndpoint,
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Inventory")
 		) + "?definitions=True"
@@ -77,6 +86,7 @@ object BungieHttpProvider {
 	 * @return an instance of Account
 	 */
 	def getAccount(po: DestinyPlayer) = getResponse[Account](
+		destinyEndpoint,
 		createControllerPath(
 			Seq(po.membershipType.toString, "Account", po.membershipId)
 		)
@@ -89,6 +99,7 @@ object BungieHttpProvider {
 	 * @return an instance of DestinyPlayer
 	 */
 	def searchDestinyPlayer(handle: String, membershipType: String = "1") = getResponse[DestinyPlayer](
+		destinyEndpoint,
 		createControllerPath(
 			Seq("SearchDestinyPlayer", membershipType, handle)
 		)
@@ -96,22 +107,24 @@ object BungieHttpProvider {
 
 	/**
 	 * Get a strong-typed object from Bungie servers
+	 * @param e the base controller endpoint
 	 * @param s the controller path
 	 * @param m the implicit manifest of T for type deserialization
 	 * @tparam T the response type
 	 * @return an instance of T
 	 */
-	def getResponse[T](s: String)(implicit m: Manifest[T]): T = get[T](s).Response
+	def getResponse[T](e: String, s: String)(implicit m: Manifest[T]): T = get[T](e, s).Response
 
 	/**
 	 * Get a strongly-typed object from Bungie servers wrapped in BaseResponse
+	 * @param e the base controller endpoint
 	 * @param s the controller path
 	 * @param m the implicit manifest of T for type deserialization
 	 * @tparam T the response type
 	 * @return an instance of BaseResponse[T]
 	 */
-	def get[T](s: String)(implicit m: Manifest[T]): BaseResponse[T] = {
-		val r = read[BaseResponse[T]](getString(s, None, debugOutput = false))
+	def get[T](e: String, s: String)(implicit m: Manifest[T]): BaseResponse[T] = {
+		val r = read[BaseResponse[T]](getString(e, s, None, debugOutput = false))
 
 		if (r.ThrottleSeconds > 0) {
 			println("***THROTTLE WARNING***")
@@ -123,27 +136,29 @@ object BungieHttpProvider {
 
 	/**
 	 * GET a string response from Bungie servers
+	 * @param e the controller base endpoint
 	 * @param s the controller path
 	 * @param q optional sequence of query parameters
 	 * @param debugOutput whether to print debugging output
 	 * @return a string
 	 */
-	def getString(s: Seq[String], q: Option[Seq[String]], debugOutput: Boolean = false): String = {
+	def getString(e: String, s: Seq[String], q: Option[Seq[String]], debugOutput: Boolean = false): String = {
 		q match {
-			case Some(x) => getString(createControllerPath(s), Some(x.mkString("&")), debugOutput)
-			case None => getString(createControllerPath(s), None, debugOutput)
+			case Some(x) => getString(e, createControllerPath(s), Some(x.mkString("&")), debugOutput)
+			case None => getString(e, createControllerPath(s), None, debugOutput)
 		}
 	}
 
 	/**
 	 * GET a string response from Bungie servers
+	 * @param e the controller base endpoint
 	 * @param s the controller path
 	 * @param q optional query parameter string
 	 * @param debugOutput whether to print debugging output
 	 * @return a string
 	 */
-	def getString(s: String, q: Option[String], debugOutput: Boolean): String = {
-		var query = "http://www.bungie.net/Platform/Destiny/" + s
+	def getString(e: String, s: String, q: Option[String], debugOutput: Boolean): String = {
+		var query = e + s
 
 		q match {
 			case Some(x) => query ++= "?" + x
