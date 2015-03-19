@@ -1,0 +1,674 @@
+{
+    "Globals": {
+        "ForumTopicsSortEnum": {
+            "Default": 0,
+            "LastReplied": 1,
+            "MostReplied": 2,
+            "Popularity": 3,
+            "Controversiality": 4,
+            "Liked": 5,
+            "HighestRated": 6
+        },
+        "ForumTopicsCategoryFiltersEnum": {
+            "None": 0,
+            "Links": 1,
+            "Questions": 2,
+            "AnsweredQuestions": 4,
+            "Media": 8,
+            "TextOnly": 16,
+            "Announcement": 32,
+            "BungieOfficial": 64,
+            "Polls": 128
+        },
+        "ForumPostCategoryEnums": {
+            "None": 0,
+            "TextOnly": 1,
+            "Media": 2,
+            "Link": 4,
+            "Poll": 8,
+            "Question": 16,
+            "Answered": 32,
+            "Announcement": 64,
+            "ContentComment": 128,
+            "BungieOfficial": 256,
+            "NinjaOfficial": 512
+        },
+        "ForumTopicsQuickDateEnum": {
+            "All": 0,
+            "LastYear": 1,
+            "LastMonth": 2,
+            "LastWeek": 3,
+            "LastDay": 4
+        },
+        "NotificationType": {
+            "MESSAGE": 1,
+            "FORUM_REPLY": 2,
+            "NEW_ACTIVITY_ROLLUP": 3,
+            "SETTINGS_CHANGE": 4,
+            "GROUP_ACCEPTANCE": 5,
+            "GROUP_JOIN_REQUEST": 6,
+            "FOLLOW_USER_ACTIVITY": 7,
+            "FRIEND_USER_ACTIVITY": 8,
+            "FORUM_LIKE": 9,
+            "FOLLOWED": 10,
+            "GROUP_BANNED": 11,
+            "BANNED": 12,
+            "UNBANNED": 13,
+            "GROUP_OPEN_JOIN": 14,
+            "GROUP_ALLIANCE_JOIN_REQUESTED": 15,
+            "GROUP_ALLIANCE_JOIN_REJECTED": 16,
+            "GROUP_ALLIANCE_JOIN_APPROVED": 17,
+            "GROUP_ALLIANCE_BROKEN": 18,
+            "GROUP_DENIAL": 19,
+            "WARNED": 20,
+            "CLAN_DISABLED": 21,
+            "GROUP_ALLIANCE_INVITE_REQUESTED": 22,
+            "GROUP_ALLIANCE_INVITE_REJECTED": 23,
+            "GROUP_ALLIANCE_INVITE_APPROVED": 24,
+            "GROUP_FOLLOWED_BY_GROUP": 25,
+            "GRIMOIRE_UNOBSERVED_CARDS": 26
+        },
+        "NotificationMethod": {
+            "EMAIL": 1,
+            "MOBILE_PUSH": 2,
+            "WEB_ONLY": 4
+        },
+        "GroupDateRange": {
+            "All": 0,
+            "PastDay": 1,
+            "PastWeek": 2,
+            "PastMonth": 3,
+            "PastYear": 4
+        },
+        "GroupSortBy": {
+            "Name": 0,
+            "Date": 1,
+            "Popularity": 2,
+            "Id": 3
+        },
+        "GroupHomepage": {
+            "Wall": 0,
+            "Forum": 1,
+            "AllianceForum": 2
+        },
+        "TextParameterSearchType": {
+            "Contains": 0,
+            "Exact": 1,
+            "StartsWith": 2,
+            "EndsWith": 3
+        },
+        "IgnoredItemType": {
+            "All": 0,
+            "Post": 1,
+            "Group": 2,
+            "User": 3,
+            "Tag": 4
+        },
+        "IgnoreLength": {
+            "None": 0,
+            "Week": 1,
+            "TwoWeeks": 2,
+            "ThreeWeeks": 3,
+            "Month": 4,
+            "ThreeMonths": 5,
+            "SixMonths": 6,
+            "Year": 7,
+            "Forever": 8,
+            "ThreeMinutes": 9,
+            "Hour": 10
+        },
+        "BungieCredentialType": {
+            "None": 0,
+            "Xuid": 1,
+            "Psnid": 2,
+            "Wlid": 3,
+            "Fake": 4,
+            "Facebook": 5,
+            "Google": 8,
+            "Windows": 9,
+            "DemonId": 10
+        },
+        "ActivityAggregationType": {
+            "None": 0,
+            "Activities": 1,
+            "Followers": 2
+        },
+        "ActivityType": {
+            "Create": 0,
+            "Edit": 1,
+            "Delete": 2,
+            "Rate": 3,
+            "Follow": 4,
+            "Unfollow": 5,
+            "Apply": 6,
+            "Rescind": 7,
+            "Approve": 8,
+            "Deny": 9,
+            "Kick": 10,
+            "EditMembershipType": 11,
+            "Like": 12,
+            "Unlike": 13,
+            "Share": 14,
+            "TaggedGroup": 15,
+            "TaggedTopic": 16,
+            "AvatarChanged": 17,
+            "DisplayNameChanged": 18,
+            "TitleChanged": 19,
+            "TitleUnlocked": 20,
+            "GroupTopicCreate": 21,
+            "GroupReplyCreate": 22,
+            "Reply": 23,
+            "ChangeClanName": 24,
+            "GroupAllianceRejected": 26,
+            "GroupAllianceApproved": 27,
+            "GroupAllianceBroken": 28,
+            "None": -1
+        },
+        "AffectedItemType": {
+            "User": 0,
+            "Post": 1,
+            "Topic": 2,
+            "Group": 3,
+            "Tag": 4,
+            "None": -1
+        },
+        "ActivityStatus": {
+            "Processing": 0,
+            "Failed": 1,
+            "Skipped": 2,
+            "Complete": 3
+        },
+        "ActivityItemOrigin": {
+            "FollowedGroup": 0,
+            "FollowedUser": 1,
+            "ActivitiesAboutMe": 2,
+            "MyActivities": 3,
+            "Undetermined": -1
+        },
+        "ActivityQueryFilter": {
+            "All": 0,
+            "Friends": 1,
+            "Following": 2,
+            "Groups": 3,
+            "Mine": 4,
+            "Tags": 5,
+            "Clans": 6
+        },
+        "ForumFlagsEnum": {
+            "None": 0,
+            "BungieStaffPost": 1,
+            "ForumNinjaPost": 2,
+            "ForumMentorPost": 4,
+            "TopicBungieStaffPosted": 8,
+            "TopicBungieVolunteerPosted": 16,
+            "QuestionAnsweredByBungie": 32,
+            "QuestionAnsweredByNinja": 64
+        },
+        "AclEnum": {
+            "None": 0,
+            "BNextForumNinja": 1,
+            "BNextUnlimitedGroups": 2,
+            "BNextFounderInAllGroups": 3,
+            "BNextBungieGold": 4,
+            "BNextNinjaColors": 5,
+            "BNextMakeOfficialTopics": 6,
+            "BNextMakeNinjaTopics": 7,
+            "BNextDeleteForumTopics": 8,
+            "BNextOverturnReports": 9,
+            "BNextBrowseReports": 10,
+            "BNextGlobalIgnore": 11,
+            "BNextEditAnyPublicPost": 12,
+            "BNextEditUsers": 13,
+            "BNextUltraBan": 14,
+            "BNextForumMentor": 15,
+            "TigerBan": 16,
+            "BNextForumCurator": 17,
+            "BNextBigLikes": 18,
+            "BNextPlayerSupport": 19
+        },
+        "IgnoreStatus": {
+            "NotIgnored": 0,
+            "IgnoredUser": 1,
+            "IgnoredGroup": 2,
+            "IgnoredByGroup": 4,
+            "IgnoredPost": 8,
+            "IgnoredTag": 16,
+            "IgnoredGlobal": 32
+        },
+        "ContentDateRange": {
+            "All": 0,
+            "Today": 1,
+            "Yesterday": 2,
+            "ThisMonth": 3,
+            "ThisYear": 4,
+            "LastYear": 5,
+            "EarlierThanLastYear": 6
+        },
+        "ContentSortBy": {
+            "CreationDate": 0,
+            "CmsPath": 1,
+            "ModifiedDate": 2
+        },
+        "FriendOnlineStatus": {
+            "Offline": 0,
+            "Online": 1,
+            "Idle": 2
+        },
+        "ForumPostPopularity": {
+            "Empty": 0,
+            "Default": 1,
+            "Discussed": 2,
+            "CoolStory": 3,
+            "HeatingUp": 4,
+            "Hot": 5
+        },
+        "MembershipOption": {
+            "Reviewed": 0,
+            "Open": 1,
+            "Closed": 2
+        },
+        "SuccessMessages": {
+            "Following": 1,
+            "Unfollowing": 2,
+            "ManagingGroupMembers": 8,
+            "UpdatingSettings": 16,
+            "ManagingGroups": 32
+        },
+        "ExternalService": {
+            "None": 0,
+            "Twitter": 1,
+            "Facebook": 2,
+            "Youtube": 3,
+            "TwitterHelp": 4
+        },
+        "ForumPostSortEnum": {
+            "Default": 0,
+            "OldestFirst": 1
+        },
+        "SurveyCompletionFlags": {
+            "None": 0,
+            "UserResearchWebPageOne": 1,
+            "UserResearchWebPageTwo": 2
+        },
+        "DestinyGender": {
+            "Male": 0,
+            "Female": 1,
+            "Unknown": 2
+        },
+        "DestinyRace": {
+            "Human": 0,
+            "Awoken": 1,
+            "Exo": 2,
+            "Unknown": 3
+        },
+        "DestinyClass": {
+            "Titan": 0,
+            "Hunter": 1,
+            "Warlock": 2,
+            "Unknown": 3
+        },
+        "ItemBindStatus": {
+            "NotBound": 0,
+            "BoundToCharacter": 1,
+            "BoundToAccount": 2,
+            "BoundToGuild": 3
+        },
+        "TierType": {
+            "Unknown": 0,
+            "Currency": 1,
+            "Basic": 2,
+            "Common": 3,
+            "Rare": 4,
+            "Superior": 5,
+            "Exotic": 6
+        },
+        "GroupTypeSearchFilter": {
+            "All": 0,
+            "Group": 1,
+            "Clan": 2
+        },
+        "GroupMemberCountFilter": {
+            "All": 0,
+            "OneToTen": 1,
+            "ElevenToOneHundred": 2,
+            "GreaterThanOneHundred": 3
+        },
+        "PeriodType": {
+            "None": 0,
+            "Daily": 1,
+            "Monthly": 2,
+            "AllTime": 3,
+            "Activity": 4
+        },
+        "DestinyStatsGroupType": {
+            "None": 0,
+            "General": 1,
+            "Weapons": 2,
+            "Medals": 3,
+            "Enemies": 4,
+            "ReservedGroups": 100,
+            "Leaderboard": 101,
+            "Activity": 102,
+            "UniqueWeapon": 103,
+            "Internal": 104
+        },
+        "DestinyActivityModeType": {
+            "None": 0,
+            "Story": 2,
+            "Strike": 3,
+            "Raid": 4,
+            "AllPvP": 5,
+            "Patrol": 6,
+            "AllPvE": 7,
+            "PvPIntroduction": 8,
+            "ThreeVsThree": 9,
+            "Control": 10,
+            "Lockdown": 11,
+            "Team": 12,
+            "FreeForAll": 13,
+            "TrialsOfOsiris": 14,
+            "Doubles": 15,
+            "Nightfall": 16,
+            "Heroic": 17,
+            "AllStrikes": 18
+        },
+        "StatFeedbackState": {
+            "Good": 0,
+            "TooHigh": 1,
+            "TooLow": 2,
+            "WrongName": 4
+        },
+        "RequestedPunishment": {
+            "Ban": 0,
+            "Warn": 1,
+            "BlastBan": 2
+        },
+        "BucketCategory": {
+            "Invisible": 0,
+            "Item": 1,
+            "Currency": 2,
+            "Equippable": 3,
+            "Ignored": 4
+        },
+        "BungieMembershipType": {
+            "None": 0,
+            "TigerXbox": 1,
+            "TigerPsn": 2,
+            "TigerDemon": 10,
+            "BungieNext": 254,
+            "All": -1
+        },
+        "ReportResolutionStatus": {
+            "Unresolved": 0,
+            "Innocent": 1,
+            "GuiltyBan": 2,
+            "GuiltyBlastBan": 3,
+            "GuiltyWarn": 4,
+            "GuiltyAlias": 5,
+            "ResolveNoAction": 6
+        },
+        "ForumTypeEnum": {
+            "Public": 0,
+            "News": 1,
+            "Group": 2,
+            "Alliance": 3
+        },
+        "DamageType": {
+            "None": 0,
+            "Kinetic": 1,
+            "Arc": 2,
+            "Thermal": 3,
+            "Void": 4,
+            "Raid": 5
+        },
+        "DestinyTalentNodeState": {
+            "Invalid": 0,
+            "CanUpgrade": 1,
+            "NoPoints": 2,
+            "NoPrerequisites": 3,
+            "NoSteps": 4,
+            "NoUnlock": 5,
+            "NoMaterial": 6,
+            "NoGridLevel": 7,
+            "SwappingLocked": 8,
+            "MustSwap": 9,
+            "Complete": 10,
+            "Unknown": 11,
+            "CreationOnly": 12
+        },
+        "OfferRedeemMode": {
+            "Off": 0,
+            "Unlock": 1,
+            "Platform": 2,
+            "Expired": 3,
+            "Consumable": 4
+        },
+        "ClientDeviceType": {
+            "Unknown": 0,
+            "Xbox360": 1,
+            "Playstation3": 2,
+            "AndroidPhone": 3,
+            "AndroidTablet": 4,
+            "ApplePhone": 5,
+            "AppleTablet": 6,
+            "WebBrowser": 7,
+            "NativeWindows": 8,
+            "NativeMac": 9,
+            "WindowsPhone": 10,
+            "WindowsTablet": 11,
+            "XboxOne": 12,
+            "Playstation4": 13,
+            "Fake": 255
+        },
+        "OptInFlags": {
+            "Newsletter": 1,
+            "System": 2,
+            "Marketing": 4,
+            "UserResearch": 8,
+            "CustomerService": 16
+        },
+        "EquipFailureReason": {
+            "None": 0,
+            "ItemUnequippable": 1,
+            "ItemUniqueEquipRestricted": 2,
+            "ItemFailedUnlockCheck": 4,
+            "ItemFailedLevelCheck": 8,
+            "ItemNotOnCharacter": 16
+        },
+        "UnitType": {
+            "None": 0,
+            "Count": 1,
+            "PerGame": 2,
+            "Seconds": 3,
+            "Points": 4,
+            "Team": 5,
+            "Distance": 6,
+            "Percent": 7,
+            "Ratio": 8,
+            "Boolean": 9,
+            "WeaponType": 10,
+            "Standing": 11
+        },
+        "EntityType": {
+            "None": 0,
+            "User": 1,
+            "Group": 2,
+            "Post": 3,
+            "Invitation": 4,
+            "Report": 5,
+            "Activity": 6,
+            "Conversation": 7,
+            "Tag": 8
+        },
+        "InvitationResponseState": {
+            "Unreviewed": 0,
+            "Approved": 1,
+            "Rejected": 2
+        },
+        "VendorItemStatus": {
+            "Success": 0,
+            "NoInventorySpace": 1,
+            "NoFunds": 2,
+            "NoProgression": 4,
+            "NoUnlock": 8,
+            "NoQuantity": 16,
+            "OutsidePurchaseWindow": 32,
+            "NotAvailable": 64,
+            "UniquenessViolation": 128,
+            "UnknownError": 256
+        },
+        "DestinyDefinitionType": {
+            "None": 0,
+            "Activity": 1,
+            "ActivityType": 2,
+            "Class": 3,
+            "Gender": 4,
+            "InventoryBucket": 5,
+            "InventoryItem": 6,
+            "Progression": 7,
+            "Race": 8,
+            "Stat": 9,
+            "TalentGrid": 10,
+            "StatGroup": 11,
+            "UnlockFlag": 12,
+            "Vendor": 13,
+            "Destination": 14,
+            "Place": 15,
+            "DirectorBook": 16,
+            "MaterialRequirement": 17,
+            "SandboxPerk": 18,
+            "ArtDye": 19,
+            "ArtDyeChannel": 20,
+            "ActivityBundle": 21,
+            "GearAsset": 22
+        },
+        "DestinyItemType": {
+            "None": 0,
+            "Currency": 1,
+            "Armor": 2,
+            "Weapon": 3,
+            "Bounty": 4,
+            "CompletedBounty": 5,
+            "BountyReward": 6,
+            "Message": 7,
+            "Engram": 8,
+            "Consumable": 9,
+            "ExchangeMaterial": 10,
+            "MissionReward": 11
+        },
+        "DestinyItemSubType": {
+            "None": 0,
+            "Crucible": 1,
+            "Vanguard": 2,
+            "IronBanner": 3,
+            "Queen": 4,
+            "Exotic": 5,
+            "AutoRifle": 6,
+            "Shotgun": 7,
+            "Machinegun": 8,
+            "HandCannon": 9,
+            "RocketLauncher": 10,
+            "FusionRifle": 11,
+            "SniperRifle": 12,
+            "PulseRifle": 13,
+            "ScoutRifle": 14,
+            "Camera": 15,
+            "Crm": 16
+        },
+        "GroupClanEnableStatus": {
+            "NotApplicable": 0,
+            "ClanEnabledSuccess": 1,
+            "ClanEnabledFailure": 2
+        },
+        "ContentDateType": {
+            "Specific": 0,
+            "MonthOnly": 1,
+            "Custom": 2
+        },
+        "DestinyExplorerBuckets": {
+            "None": 0,
+            "Artifact": 1,
+            "Materials": 2,
+            "Consumables": 4,
+            "Mission": 8,
+            "Bounties": 16,
+            "Build": 32,
+            "PrimaryWeapon": 64,
+            "SpecialWeapon": 128,
+            "HeavyWeapon": 256,
+            "Head": 512,
+            "Arms": 1024,
+            "Chest": 2048,
+            "Legs": 4096,
+            "ClassItems": 8192,
+            "Ghost": 16384,
+            "Vehicle": 32768,
+            "Ship": 65536,
+            "Shader": 131072,
+            "Emblem": 262144
+        },
+        "DestinyExplorerOrderBy": {
+            "None": 0,
+            "Name": 1,
+            "ItemType": 2,
+            "Rarity": 3,
+            "ItemTypeName": 4,
+            "ItemStatHash": 5,
+            "MinimumRequiredLevel": 6,
+            "MaximumRequiredLevel": 7
+        },
+        "ItemLocation": {
+            "Unknown": 0,
+            "Inventory": 1,
+            "Vault": 2,
+            "Vendor": 3,
+            "Postmaster": 4
+        }
+    },
+    "ReverseGlobals": {
+        "DestinyActivityModeType": {
+            "0": "None",
+            "2": "Story",
+            "3": "Strike",
+            "4": "Raid",
+            "5": "AllPvP",
+            "6": "Patrol",
+            "7": "AllPvE",
+            "8": "PvPIntroduction",
+            "9": "ThreeVsThree",
+            "10": "Control",
+            "11": "Lockdown",
+            "12": "Team",
+            "13": "FreeForAll",
+            "14": "TrialsOfOsiris",
+            "15": "Doubles",
+            "16": "Nightfall",
+            "17": "Heroic",
+            "18": "AllStrikes"
+        },
+        "TierType": [
+            "Unknown",
+            "Currency",
+            "Basic",
+            "Common",
+            "Rare",
+            "Superior",
+            "Exotic"
+        ],
+        "DestinyTalentNodeState": [
+            "Invalid",
+            "CanUpgrade",
+            "NoPoints",
+            "NoPrerequisites",
+            "NoSteps",
+            "NoUnlock",
+            "NoMaterial",
+            "NoGridLevel",
+            "SwappingLocked",
+            "MustSwap",
+            "Complete",
+            "Unknown",
+            "CreationOnly"
+        ]
+    }
+}
