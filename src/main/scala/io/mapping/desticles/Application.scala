@@ -2,6 +2,8 @@ package io.mapping.desticles
 
 import com.typesafe.config.ConfigFactory
 import io.mapping.desticles.controller.{CharacterController, GrimoireController, InventoryController, PlayerAccountController}
+import io.mapping.desticles.debug.DumpOutput
+import io.mapping.desticles.http.BungieHttpProvider
 import org.json4s.DefaultFormats
 
 object Application extends App {
@@ -51,4 +53,26 @@ object Application extends App {
 	 */
 	val grimCards = GrimoireController.getGrimoireCards(playerAcct.player)
 	println(s"The player has a Grimoire score of ${grimCards.data.score}")
+
+	/**
+	 * Get the top character's activities
+	 */
+	val acts = CharacterController.getCharacterActivities(playerAcct.player, topChar)
+	println(acts.data.available.getOrElse(Array()))
+	println(s"The character " + (if (acts.data.available.getOrElse(Array()).exists(ca => ca.activityHash.equals(1836893119) && ca.isCompleted)) "has completed" else "has not completed") + "Crota's end on hard mode")
+
+	/**
+	 * DEV AREA
+	 */
+
+	//[membershipType]/Account/[accountId]/Character/[characterId]/Activities/     definitions=[g]
+
+	DumpOutput.dumpString(
+		BungieHttpProvider.getString(
+			BungieHttpProvider.destinyEndpoint,
+			Seq(playerAcct.player.membershipType.toString, "Account", playerAcct.player.membershipId, "Character", topChar.characterBase.characterId, "Activities"),
+			Some(Seq("definitions=True")),
+			debugOutput = false
+		),
+		(x) => Unit)
 }

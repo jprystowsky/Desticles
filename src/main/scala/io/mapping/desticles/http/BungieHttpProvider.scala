@@ -17,6 +17,19 @@ object BungieHttpProvider extends BungieEndpoints {
 	implicit val formats = DefaultFormats
 
 	/**
+	 * Gets the activities for a player's character
+	 * @param po an instance of DestinyPlayer
+	 * @param c an instance of PlayerCharacter
+	 * @return an instance of CharacterActivities
+	 */
+	def getCharacterActivities(po: DestinyPlayer, c: PlayerCharacter) = getResponse[CharacterActivities](
+		destinyEndpoint,
+		createControllerPath(
+			Seq(po.membershipType.toString, "Account", po.membershipId, "Character", c.characterBase.characterId, "Activities")
+		) + "?definitions=True"
+	)
+
+	/**
 	 * Get the Grimoire cards for a player
 	 * @param po an instance of DestinyPlayer
 	 * @return an instance of GrimoireCards

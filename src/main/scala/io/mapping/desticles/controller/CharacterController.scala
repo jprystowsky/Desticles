@@ -40,4 +40,12 @@ object CharacterController extends BaseController {
 	 * @return an instance of CharacterProgression
 	 */
 	def getCharacterProgression(po: DestinyPlayer, c: PlayerCharacter): CharacterProgression = bungie.getCharacterProgression(po, c)
+
+	/**
+	 * Get the activities for a player's particular character
+	 * @param po an instance of DestinyPlayer
+	 * @param c an instance of PlayerCharacter corresponding to po
+	 * @return an instance of CharacterActivities
+	 */
+	def getCharacterActivities(po: DestinyPlayer, c: PlayerCharacter): CharacterActivities = bungie.getCharacterActivities(po, c)
 }
