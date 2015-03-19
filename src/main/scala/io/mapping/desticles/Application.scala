@@ -1,5 +1,8 @@
 package io.mapping.desticles
 
+import java.awt.{ Color, Graphics2D }
+import scala.util.Random
+import javax.swing.{JFrame, JOptionPane, JLabel, ImageIcon}
 import com.typesafe.config.ConfigFactory
 import io.mapping.desticles.controller.{CharacterController, GrimoireController, InventoryController, PlayerAccountController}
 import io.mapping.desticles.debug.DumpOutput
@@ -48,12 +51,36 @@ object Application extends App {
 		println(s"\t${p.perkHash}")
 	}
 
-	/**
+  println(topItem.toString)
+  println(topItemDetail.toString)
+  showTopItemImg(topItem, topItemDetail)
+
+
+  /**
 	 * Get the player's Grimoire Cards
 	 */
 	val grimCards = GrimoireController.getGrimoireCards(playerAcct.player)
 	println(s"The player has a Grimoire score of ${grimCards.data.score}")
 
+
+  def showTopItemImg(t:Object, td:Object) = {
+    val f = new JFrame("Img Test")
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    f.setSize(400,400)
+
+
+    //This link returns item image.  Data in topItem and topItemDetail does not contain this value.
+    //https://www.bungie.net//common/destiny_content/icons/80da6cbfde86ecd6a8bb720c3df54d0b.jpg
+
+    val i = new JLabel(new ImageIcon("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemInstanceId + ".jpg"))
+
+    println("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemInstanceId + ".jpg")
+    f.getContentPane().add(i);
+    f.add(i);
+    f.pack();
+    f.setVisible(true);
+  }
+}
 	/**
 	 * Get the top character's activities
 	 */
