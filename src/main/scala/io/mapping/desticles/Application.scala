@@ -63,6 +63,20 @@ object Application extends App {
 	}
 
 	/**
+	 * Get readable info about all the character's equippable items
+	 */
+	val readableEquippableItems = for (
+		i <- inv.buckets.Equippable.flatMap(idb =>idb.items);
+		j <- MobileWorldContentDb.getInventoryItemDefinitions.filter(_.itemHash == i.itemHash)
+		if j.itemName.isDefined && j.itemDescription.isDefined
+	) yield j
+
+	println("Here's all the equippable items for this top character:")
+	for (rEI <- readableEquippableItems) {
+		println(s"\t${rEI.itemName.get}: ${rEI.itemDescription.get}")
+	}
+
+	/**
 	 * Fetch human-readable info about the top item from the database
 	 */
 	val topItemDb = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemHash == topItem.itemHash).head
