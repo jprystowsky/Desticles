@@ -7,6 +7,7 @@ import io.mapping.desticles.controller._
 import io.mapping.desticles.database.MobileWorldContentDb
 import io.mapping.desticles.debug.DumpOutput
 import io.mapping.desticles.http.BungieHttpProvider
+import io.mapping.desticles.model.InventoryDefinitionItem
 import org.json4s.DefaultFormats
 
 object Application extends App {
@@ -17,28 +18,12 @@ object Application extends App {
 	/**
 	 * Initialize the manifest
 	 */
-	var manifest = ManifestController.getManifest
-	manifest match {
+	ManifestController.getManifest match {
 		case Left(m) => {
 			println("Manifest retrieved")
-			println(m)
 		}
-		case Right(n) => println("Couldn't do it")
+		case Right(n) => println("Couldn't retrieve manifest; this is bad")
 	}
-
-	/**
-	 * EXTREME DEV AREA
-	 */
-
-	println("RED DEATH IS")
-	//val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.json.contains("Red Death"))
-	val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemName.getOrElse("") == "Red Death")
-	println(redDeath)
-	println("RED DEATH WAS")
-
-	/**
-	 * END EXTREME DEV AREA
-	 */
 
 	/**
 	 * Get a player and their account
@@ -77,7 +62,12 @@ object Application extends App {
 		println(s"\t${p.perkHash}")
 	}
 
-  showTopItemImg(topItem, topItemDetail)
+	/**
+	 * Fetch human-readable info about the top item from the database
+	 */
+	val topItemDb = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemHash == topItem.itemHash).head
+	println(s"The top quality item is in actuality ${topItemDb.itemName.getOrElse("no name found!?")}")
+	showTopItemImg(topItemDb)
 
 
   /**
@@ -87,26 +77,27 @@ object Application extends App {
 	println(s"The player has a Grimoire score of ${grimCards.data.score}")
 
 
-  def showTopItemImg(t:Object, td:Object) = {
-    val f = new JFrame("Img Test")
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-    f.setSize(400,400)
+	def showTopItemImg(item: InventoryDefinitionItem) = {
+		val imageUrlPath = Seq(BungieHttpProvider.bungieServer, item.icon).mkString("/")
 
+		ManifestController.getSaveWebImageItemAsset(imageUrlPath) match {
+			case Left(imgFile) => {
+				val f = new JFrame("Img Test")
+				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+				f.setSize(400, 400)
 
-    //This link returns item image.  Data in topItem and topItemDetail does not contain this value.
-    //https://www.bungie.net//common/destiny_content/icons/80da6cbfde86ecd6a8bb720c3df54d0b.jpg
+				val i = new JLabel(new ImageIcon(imgFile.getCanonicalPath))
 
-	  //println(org.json4s.native.Serialization.writePretty(topItem))
-	  //println(org.json4s.native.Serialization.writePretty(topItemDetail))
+				println(imageUrlPath)
+				f.getContentPane().add(i)
+				f.add(i)
+				f.pack()
+				f.setVisible(true)
+			}
 
-    val i = new JLabel(new ImageIcon("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemHash + ".jpg"))
-
-    println("https://www.bungie.net//common/destiny_content/icons/" + topItem.itemHash + ".jpg")
-    f.getContentPane().add(i);
-    f.add(i);
-    f.pack();
-    f.setVisible(true);
-  }
+			case Right(n) => println("Couldn't get/save web image; aborting this part")
+		}
+	}
 	/**
 	 * Get the top character's activities
 	 */
