@@ -1,8 +1,7 @@
 package io.mapping.desticles.database
 
 import io.mapping.desticles.controller.ManifestController
-import io.mapping.desticles.database.model.{DestinyInventoryItemDefinitions, DestinyInventoryItemDefinition}
-import io.mapping.desticles.model.database.DestinyInventoryItemDefinition
+import io.mapping.desticles.database.model.{DestinyInventoryItemDefinition, DestinyInventoryItemDefinitions}
 
 trait MobileWorldContent {
 	def getInventoryItemDefinitions: List[DestinyInventoryItemDefinition]
