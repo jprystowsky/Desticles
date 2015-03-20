@@ -126,7 +126,7 @@ object ManifestController extends BaseController {
 
 		private val manifestDirectoryName = "manifest"
 		private val localManifestName = "localManifest"
-		private val mobileWorldContentName = "mobileWorldContent"
+		private val mobileWorldContentName = "mobileWorldContent.sqlite"
 		private val mobileWorldContentZipName = Seq(mobileWorldContentName, "zip").mkString(".")
 		private val manifestAssetsDirectoryName = "assets"
 
