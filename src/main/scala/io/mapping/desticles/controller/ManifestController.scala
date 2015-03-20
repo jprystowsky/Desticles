@@ -13,7 +13,6 @@ import org.json4s.native.Serialization.{read, writePretty}
 object ManifestController extends BaseController {
 	implicit private val formats = DefaultFormats
 
-	// todo: change to Either[X, None.type] where X is the type of full Destiny manifest
 	def getManifest: Either[DestinyManifest, None.type] = {
 		ManifestLoader.getManifestDirectory match {
 			case Left(d) => {
@@ -34,6 +33,12 @@ object ManifestController extends BaseController {
 		 * extract json from db into files
 		 */
 	}
+
+	def getSaveWebImageItemAsset(url: String): Either[File, None.type] = getSaveWebImageAsset(url, "items")
+
+	private def getSaveWebImageAsset(url: String, subDir: String): Either[File, None.type] = getSaveWebAsset(Seq("images", subDir).mkString("/"), url)
+
+	private def getSaveWebAsset(prefix: String, url: String): Either[File, None.type] = ManifestLoader.getSaveWebAsset(prefix, url)
 
 	/**
 	 * Gets the path to the mobile world content database
@@ -123,6 +128,7 @@ object ManifestController extends BaseController {
 		private val localManifestName = "localManifest"
 		private val mobileWorldContentName = "mobileWorldContent"
 		private val mobileWorldContentZipName = Seq(mobileWorldContentName, "zip").mkString(".")
+		private val manifestAssetsDirectoryName = "assets"
 
 
 		/**
@@ -134,32 +140,7 @@ object ManifestController extends BaseController {
 		lazy val localManifestPath = Seq(manifestDirectoryPath, localManifestName).mkString("/")
 		lazy val mobileWorldContentPath = Seq(manifestDirectoryPath, mobileWorldContentName).mkString("/")
 		lazy val mobileWorldContentZipPath = Seq(manifestDirectoryPath, mobileWorldContentZipName).mkString("/")
-
-		/**
-		 * Test to see if the local manifest directory exists
-		 * @return a boolean
-		 */
-		private def manifestDirectoryExists: Boolean = {
-			val x = new File(manifestDirectoryPath)
-
-			x.exists && x.isDirectory
-		}
-
-		/**
-		 * Test to see if the local manifest file exists
-		 * @return a boolean
-		 */
-		private def localManifestExists: Boolean = {
-			val x = new File(localManifestPath)
-
-			x.exists && x.isFile
-		}
-
-		/**
-		 * Create the local manifest directory
-		 * @return a boolean indicating success
-		 */
-		private def createManifestDirectory: Boolean = new File(manifestDirectoryPath).mkdir
+		lazy val manifestAssetsDirectoryPath = Seq(manifestDirectoryPath, manifestAssetsDirectoryName).mkString("/")
 
 		/**
 		 * Get the local manifest directory
@@ -177,7 +158,7 @@ object ManifestController extends BaseController {
 		 * @return either an instance of DestinyManifest or None
 		 */
 		def getLocalManifest: Either[DestinyManifest, None.type] = {
-			if (localManifestExists)
+			if (someFileExists(localManifestPath))
 				Left(read[DestinyManifest](FileUtils.readFileToString(new File(localManifestPath))))
 			else
 				Right(None)
@@ -199,11 +180,49 @@ object ManifestController extends BaseController {
 		 * Create the local manifest directory if it doesn't already exist
 		 * @return a boolean indicating success
 		 */
-		def initManifestDirectory: Boolean = {
-			if (!manifestDirectoryExists) {
+		def initManifestDirectory: Boolean = initSomeDir(manifestDirectoryPath)
+
+		def getSaveWebAsset(prefix: String, url: String): Either[File, None.type] = {
+			if (initSomeDir(manifestAssetsDirectoryPath)) {
+				val subPath = Seq(manifestAssetsDirectoryPath, prefix).mkString("/")
+
+				if (initSomeDir(subPath)) {
+					val saveFilePath = Seq(subPath, url.split("/").takeRight(1).head).mkString("/")
+					val saveFile = new File(saveFilePath)
+
+					if (someFileExists(subPath)) {
+						Left(saveFile)
+					} else {
+						FileUtils.copyURLToFile(new URL(url), saveFile)
+						Left(saveFile)
+					}
+				} else {
+					Right(None)
+				}
+			} else {
+				Right(None)
+			}
+		}
+
+		private def someDirExists(path: String): Boolean = {
+			val x = new File(path)
+
+			x.exists && x.isDirectory
+		}
+
+		private def someFileExists(path: String): Boolean = {
+			val x = new File(path)
+
+			x.exists && x.isFile
+		}
+
+		private def createSomeDir(path: String): Boolean = new File(path).mkdir
+
+		private def initSomeDir(path: String): Boolean = {
+			if (!someDirExists(path)) {
 				synchronized {
-					if (!manifestDirectoryExists) {
-						createManifestDirectory
+					if (!someDirExists(path)) {
+						createSomeDir(path)
 					}
 				}
 			}
