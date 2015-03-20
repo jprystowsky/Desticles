@@ -35,6 +35,10 @@ object ManifestController extends BaseController {
 		 */
 	}
 
+	/**
+	 * Gets the path to the mobile world content database
+	 * @return a string
+	 */
 	def getMobileWorldContentDatabasePath: String = ManifestLoader.getMobileWorldContent.getCanonicalPath
 
 	private def downloadMobileWorldContentZip(m: DestinyManifest): File = {
