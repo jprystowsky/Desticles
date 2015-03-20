@@ -31,7 +31,8 @@ object Application extends App {
 	 */
 
 	println("RED DEATH IS")
-	val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.json.contains("Red Death"))
+	//val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.json.contains("Red Death"))
+	val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemName.getOrElse("") == "Red Death")
 	println(redDeath)
 	println("RED DEATH WAS")
 
