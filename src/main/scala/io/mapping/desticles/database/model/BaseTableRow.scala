@@ -1,4 +1,4 @@
-package io.mapping.desticles.model.database
+package io.mapping.desticles.database.model
 
 class BaseTableRow(
 	                  id: Long,

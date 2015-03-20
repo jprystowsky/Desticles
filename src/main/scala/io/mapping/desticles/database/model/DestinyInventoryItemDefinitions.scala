@@ -1,6 +1,6 @@
-package io.mapping.desticles.model.database
+package io.mapping.desticles.database.model
 
-import io.mapping.desticles.database.MobileWorldContentItemTable
+import io.mapping.desticles.database.MobileWorldContentItemProvider
 
 import scala.slick.driver.SQLiteDriver.simple._
 
@@ -15,8 +15,8 @@ class DestinyInventoryItemDefinitions(tag: Tag) extends Table[DestinyInventoryIt
 	def * = (id, json) <> (DestinyInventoryItemDefinition.tupled, DestinyInventoryItemDefinition.unapply _)
 }
 
-object DestinyInventoryItemDefinitions extends MobileWorldContentItemTable[DestinyInventoryItemDefinition] {
-	private val inventoryItemDefinitions = TableQuery[DestinyInventoryItemDefinitions]
+object DestinyInventoryItemDefinitions extends MobileWorldContentItemProvider[DestinyInventoryItemDefinitions, DestinyInventoryItemDefinition] {
+	override val items = TableQuery[DestinyInventoryItemDefinitions]
 
-	override def getItems(implicit s: Session): List[DestinyInventoryItemDefinition] = inventoryItemDefinitions.list
+	override def getTableItems(implicit s: Session): List[DestinyInventoryItemDefinition] = items.list
 }
