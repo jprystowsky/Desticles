@@ -35,6 +35,8 @@ object ManifestController extends BaseController {
 		 */
 	}
 
+	def getMobileWorldContentDatabasePath: String = ManifestLoader.getMobileWorldContent.getCanonicalPath
+
 	private def downloadMobileWorldContentZip(m: DestinyManifest): File = {
 		FileUtils.copyURLToFile(
 			new URL(Seq(BungieHttpProvider.bungieServer, m.mobileWorldContentPaths.en).mkString("/")),

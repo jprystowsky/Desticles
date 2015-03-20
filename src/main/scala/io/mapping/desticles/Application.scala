@@ -4,6 +4,7 @@ import javax.swing.{ImageIcon, JFrame, JLabel}
 
 import com.typesafe.config.ConfigFactory
 import io.mapping.desticles.controller._
+import io.mapping.desticles.database.MobileWorldContentDb
 import io.mapping.desticles.debug.DumpOutput
 import io.mapping.desticles.http.BungieHttpProvider
 import org.json4s.DefaultFormats
@@ -24,6 +25,19 @@ object Application extends App {
 		}
 		case Right(n) => println("Couldn't do it")
 	}
+
+	/**
+	 * EXTREME DEV AREA
+	 */
+
+	println("RED DEATH IS")
+	val redDeath = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.json.contains("Red Death"))
+	println(redDeath)
+	println("RED DEATH WAS")
+
+	/**
+	 * END EXTREME DEV AREA
+	 */
 
 	/**
 	 * Get a player and their account
