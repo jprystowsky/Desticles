@@ -28,3 +28,12 @@ case class DisplayableStat(
 	                          displayDescription: String,
 	                          displayIcon: String
 	                          ) extends Stat(statHash)
+
+case class DbStat(
+	                 statHash: Long,
+	                 statName: Option[String],
+	                 statDescription: Option[String],
+	                 icon: String,
+	                 statIdentifier: String,
+	                 interpolate: Boolean
+	                 ) extends Stat(statHash)

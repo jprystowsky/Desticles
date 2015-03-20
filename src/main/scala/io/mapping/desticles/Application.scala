@@ -68,12 +68,12 @@ object Application extends App {
 	val readableEquippableItems = for (
 		i <- inv.buckets.Equippable.flatMap(idb =>idb.items);
 		j <- MobileWorldContentDb.getInventoryItemDefinitions.filter(_.itemHash == i.itemHash)
-		if j.itemName.isDefined && j.itemDescription.isDefined
+		if j.itemName.isDefined
 	) yield j
 
 	println("Here's all the equippable items for this top character:")
 	for (rEI <- readableEquippableItems) {
-		println(s"\t${rEI.itemName.get}: ${rEI.itemDescription.get}")
+		println(s"\t${rEI.itemName.get}: ${rEI.itemDescription.getOrElse("no db description")}")
 	}
 
 	/**
@@ -81,6 +81,17 @@ object Application extends App {
 	 */
 	val topItemDb = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemHash == topItem.itemHash).head
 	println(s"The top quality item is in actuality ${topItemDb.itemName.getOrElse("no name found!?")}")
+
+	println("Here are its stats:")
+	val topItemStats = for (
+		s <- topItem.stats;
+		x <- MobileWorldContentDb.getStatDefinitions.filter(_.statHash == s.statHash)
+		if x.statName.isDefined
+	) yield (x, s)
+	for (stat <- topItemStats) {
+		println(s"\t${stat._1.statName.get}: ${stat._1.statDescription.getOrElse("no db description")} (value ${stat._2.value}/${stat._2.maximumValue}})")
+	}
+
 	showTopItemImg(topItemDb)
 
 

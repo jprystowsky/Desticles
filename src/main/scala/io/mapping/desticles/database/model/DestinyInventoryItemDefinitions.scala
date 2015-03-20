@@ -6,14 +6,16 @@ import io.mapping.desticles.model.InventoryDefinitionItem
 import scala.slick.driver.SQLiteDriver.simple._
 
 case class DestinyInventoryItemDefinition(
-                                         id: Long,
-                                         json: String
+	                                         id: Long,
+	                                         json: String
 	                                         ) extends BaseTableRow(id, json)
 
 class DestinyInventoryItemDefinitions(tag: Tag) extends Table[DestinyInventoryItemDefinition](tag, "DestinyInventoryItemDefinition") {
 	def id = column[Long]("id", O.PrimaryKey)
+
 	def json = column[String]("json")
-	def * = (id, json) <> (DestinyInventoryItemDefinition.tupled, DestinyInventoryItemDefinition.unapply _)
+
+	def * = (id, json) <>(DestinyInventoryItemDefinition.tupled, DestinyInventoryItemDefinition.unapply _)
 }
 
 object DestinyInventoryItemDefinitions extends MobileWorldContentItemProvider[DestinyInventoryItemDefinitions, DestinyInventoryItemDefinition, InventoryDefinitionItem] {
