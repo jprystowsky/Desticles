@@ -2,20 +2,22 @@ package io.mapping.desticles.model
 
 case class InventoryDefinitionItem(
 	                                  itemHash: Long,
-	                                  itemName: String,
-	                                  itemDescription: String,
+	                                  itemName: Option[String],
+	                                  itemDescription: Option[String],
 	                                  icon: String,
 	                                  secondaryIcon: String,
-	                                  actionName: String,
-	                                  actionDescription: String,
-	                                  tierTypeName: String,
+	                                  actionName: Option[String],
+	                                  actionDescription: Option[String],
+	                                  tierTypeName: Option[String],
 	                                  tierType: Int,
-	                                  itemTypeName: String,
+	                                  itemTypeName: Option[String],
 	                                  bucketTypeHash: Long,
+	                                  primaryBaseStatHash: Long,
+	                                  stats: Map[String, FullyBoundedStat],
 	                                  primaryBaseStat: Option[FullyBoundedStat],
 	                                  baseStats: Option[Array[FullyBoundedStat]],
 	                                  perkHashes: Option[Array[Long]],
-	                                  itemIdentifier: String,
+	                                  itemIdentifier: Option[String],
 	                                  specialItemType: Int,
 	                                  talentGridHash: Long,
 	                                  equippingBlock: Option[InventoryDefinitionItemEquippingBlock],
@@ -29,7 +31,8 @@ case class InventoryDefinitionItem(
 	                                  itemSubType: Int,
 	                                  classType: Int,
 	                                  nonTransferrable: Boolean,
-	                                  exclusive: Int
+	                                  exclusive: Int,
+	                                  maxStackSize: Option[Int]
 	                                  )
 
 case class InventoryDefinitionItemEquippingBlock(
