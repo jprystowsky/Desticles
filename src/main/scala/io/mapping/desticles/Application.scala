@@ -82,6 +82,16 @@ object Application extends App {
 	val topItemDb = MobileWorldContentDb.getInventoryItemDefinitions.filter(x => x.itemHash == topItem.itemHash).head
 	println(s"The top quality item is in actuality ${topItemDb.itemName.getOrElse("no name found!?")}")
 
+	println("Here are its perks by name:")
+	val topItemPerks = for (
+		i <- topItem.perks;
+		j <- MobileWorldContentDb.getPerkDefinitions.filter(_.perkHash == i.perkHash)
+		if j.displayName.isDefined
+	) yield j
+	for (perk <- topItemPerks) {
+		println(s"\t${perk.displayName.get}: ${perk.displayDescription.getOrElse("no db description")}")
+	}
+
 	println("Here are its stats:")
 	val topItemStats = for (
 		s <- topItem.stats;
