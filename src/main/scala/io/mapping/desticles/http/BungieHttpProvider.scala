@@ -8,7 +8,8 @@ import org.json4s.native.Serialization.{read, writePretty}
 import scalaj.http.Http
 
 trait BungieEndpoints {
-	val destinyEndpoint = "http://www.bungie.net/Platform/Destiny/"
+	lazy val bungieServer = "http://www.bungie.net/"
+	lazy val destinyEndpoint = Seq(bungieServer, "Platform/Destiny/").mkString("/")
 }
 
 object BungieHttpProvider extends BungieEndpoints {
