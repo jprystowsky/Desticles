@@ -1,6 +1,6 @@
 package io.mapping.desticles
 
-import javax.swing.{ImageIcon, JFrame, JLabel}
+import javax.swing._
 
 import com.typesafe.config.ConfigFactory
 import io.mapping.desticles.controller._
@@ -102,7 +102,17 @@ object Application extends App {
 		println(s"\t${stat._1.statName.get}: ${stat._1.statDescription.getOrElse("no db description")} (value ${stat._2.value}/${stat._2.maximumValue}})")
 	}
 
-	showTopItemImg(topItemDb)
+  val f = new JFrame("Main Frame")
+  f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+  f.setSize(400, 400)
+
+  BuildPanes(f);
+
+  f.pack()
+  f.setVisible(true)
+
+  //todo: use this to populate in a pane
+	//showTopItemImg(topItemDb)
 
 
   /**
@@ -110,6 +120,22 @@ object Application extends App {
 	 */
 	val grimCards = GrimoireController.getGrimoireCards(playerAcct.player)
 	println(s"The player has a Grimoire score of ${grimCards.data.score}")
+
+
+  def BuildPanes(f: JFrame) = {
+    val jtp = new JTabbedPane();
+    f.getContentPane().add(jtp);
+    val jp1 = new JPanel();
+    val jp2 = new JPanel();
+    val label1 = new JLabel();
+    label1.setText("panel 1");
+    val label2 = new JLabel();
+    label2.setText("panel 2");
+    jp1.add(label1);
+    jp2.add(label2);
+    jtp.addTab("Tab1", jp1);
+    jtp.addTab("Tab2", jp2);
+  }
 
 
 	def showTopItemImg(item: InventoryDefinitionItem) = {
